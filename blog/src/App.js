@@ -9,6 +9,7 @@ function App() {
     "돈큐의 코딩 아카데미",
   ]);
   let [따봉, 따봉변경] = useState(0);
+
   // [a (남자 코트 추천), b (남자 코트 추천 state 정정해주는 함수)]
   // state 는
   // 1. 변수 대신 쓰는 데이터 저장공간
@@ -25,7 +26,7 @@ function App() {
     return 100;
   }
   function 제목바꾸기() {
-    // state 데이터 수정 테크닉
+    // state 데이터 수n정 테크닉
     // 수정된[데이터]를 만든후 state를 deep copy해서 수정
     var newArray = [...글제목];
     newArray[0] = "여자코트 추천";
@@ -38,6 +39,20 @@ function App() {
   }
   function 모달창제어() {
     modal변경(!modal);
+  }
+
+  let arr = [2, 3, 4];
+  let new_arr = arr.map(function (a) {
+    return a * 2;
+  });
+  // 맵 함수 활용법
+
+  function 반복된UI() {
+    var 어레이 = [];
+    for (var i = 0; i < 3; i++) {
+      어레이.push(<div>안녕</div>);
+    }
+    return 어레이;
   }
   return (
     <div className="App">
@@ -88,6 +103,25 @@ function App() {
         <p>2월 17일 발행</p>
         <hr></hr>
       </div>
+      {글제목.map((a, i) => {
+        return (
+          <div className="list">
+            <h3>
+              {a}
+              <span
+                onClick={() => {
+                  따봉변경(따봉 + 1);
+                }}
+              >
+                👍
+              </span>
+              {따봉}
+            </h3>
+            <p>2월 18일 발행</p>
+            <hr></hr>
+          </div>
+        );
+      })}
 
       {/* HTML을 한단어로 줄여서 쓸수 있는 방법: 리액트의 Component 문법 */}
       {/* Componet 유의 사항
@@ -104,6 +138,8 @@ function App() {
       참일 경우 맞아요, 거짓일 경우 틀려요를 뱉는다*/}
       {modal === true ? <Modal></Modal> : null}
       <button onClick={모달창제어}>모달제어</button>
+      {반복된UI()}
+      {/* 일반적인 반복문 쓰는법  */}
     </div>
   );
 }
