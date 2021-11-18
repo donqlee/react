@@ -17,6 +17,9 @@ function App() {
 
   // state에 데이터 저장해놓는 이유 (state는 변경되면 HTML이 자동으로 재렌더링 된다.)
 
+  let [modal, modal변경] = useState(false);
+  // 모달창을 켜고 닫는 스위치
+
   let posts = "강남 고기 맛집";
   function 함수() {
     return 100;
@@ -33,6 +36,9 @@ function App() {
     newArray1.sort();
     글제목변경(newArray1);
   }
+  function 모달창제어() {
+    modal변경(!modal);
+  }
   return (
     <div className="App">
       <div className="black-nav">
@@ -47,7 +53,7 @@ function App() {
           함수, src, id, href, 클래스명 등의 속성에도 */}
       <div className="list">
         <h3>
-          {글제목[0]}{" "}
+          {글제목[0]}
           <span
             onClick={() => {
               따봉변경(따봉 + 1);
@@ -71,7 +77,14 @@ function App() {
         <hr></hr>
       </div>
       <div className="list">
-        <h3>{글제목[2]}</h3>
+        <h3
+          onClick={() => {
+            modal변경(!modal);
+          }}
+        >
+          {/* 모달 토글을 만들고 싶을때 위와 같이 만들면 된다 */}
+          {글제목[2]}
+        </h3>
         <p>2월 17일 발행</p>
         <hr></hr>
       </div>
@@ -85,7 +98,12 @@ function App() {
       - 반복출현하는 HTML 덩어리들
       - 자주 변경되는 HTML UI들
       - 다른 페이지 만들때도 컴포넌트로 만듬 */}
-      <Modal></Modal>
+
+      {/* jsx에서는 if문을 삼항연산자로 주로 쓴다.
+      1<3 ? console.log('맞아요') : console.log('틀려요') 
+      참일 경우 맞아요, 거짓일 경우 틀려요를 뱉는다*/}
+      {modal === true ? <Modal></Modal> : null}
+      <button onClick={모달창제어}>모달제어</button>
     </div>
   );
 }
