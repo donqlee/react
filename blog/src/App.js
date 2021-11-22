@@ -9,6 +9,7 @@ function App() {
     "돈큐의 코딩 아카데미",
   ]);
   let [따봉, 따봉변경] = useState(0);
+
   let [누른제목, 누른제목변경] = useState(0);
   let [입력값, 입력값변경] = useState("");
 
@@ -134,7 +135,23 @@ function App() {
           입력값변경(e.target.value);
         }}
       ></input>
-      ;{/* HTML을 한단어로 줄여서 쓸수 있는 방법: 리액트의 Component 문법 */}
+      <div className="publish">
+        <input
+          onChange={(e) => {
+            입력값변경(e.target.value);
+          }}
+        ></input>
+        <button
+          onClick={() => {
+            var arrayCopy = [...글제목];
+            arrayCopy.push(입력값);
+            글제목변경(arrayCopy);
+          }}
+        >
+          저장
+        </button>
+      </div>
+      {/* HTML을 한단어로 줄여서 쓸수 있는 방법: 리액트의 Component 문법 */}
       {/* Componet 유의 사항
       1. 이름은 대문자
       2. return() 안에 있는건 태그 하나로 묶어야함 -> return() 내부를 묵을때 의미없는 <div> 쓰기 싫으면 <> </> 이걸쓴다 */}
@@ -149,8 +166,9 @@ function App() {
         <Modal 글제목={글제목} 누른제목={누른제목}></Modal>
       ) : null}
       <button onClick={모달창제어}>모달제어</button>
-      {반복된UI()}
       {/* 일반적인 반복문 쓰는법  */}
+
+      <Profile></Profile>
     </div>
   );
 }
@@ -166,6 +184,38 @@ function Modal(props) {
   // props로 자식에게 state  전해주는법
   // 1. <자식컴포넌트 작명={state명}/>
   // 2. 자식컴포넌트에서 props 파라미터 입력 후 사용
+}
+
+//예전 리엑트 컴포넌트 만드는법
+class Profile extends React.Component {
+  constructor() {
+    super();
+    // state 설정 방법
+    this.state = { name: "Kim", age: 30 };
+  }
+  //함수 만드는 곳
+  changeName() {
+    this.setState({ name: "Park" });
+  }
+
+  render() {
+    return (
+      <div>
+        <h3>프로필입니다.</h3>
+        {/* state 꺼내는법 */}
+        <p>저는 {this.state.name}</p>
+        <button
+          onClick={() => {
+            // state 변경하는법
+            this.setState({ name: "Park" });
+          }}
+        >
+          버튼
+        </button>
+        <button onClick={this.changeName.bind(this)}>버튼2</button>
+      </div>
+    );
+  }
 }
 
 export default App;
