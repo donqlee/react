@@ -9,6 +9,8 @@ function App() {
     "돈큐의 코딩 아카데미",
   ]);
   let [따봉, 따봉변경] = useState(0);
+  let [누른제목, 누른제목변경] = useState(0);
+  let [입력값, 입력값변경] = useState("");
 
   // [a (남자 코트 추천), b (남자 코트 추천 state 정정해주는 함수)]
   // state 는
@@ -103,10 +105,14 @@ function App() {
         <p>2월 17일 발행</p>
         <hr></hr>
       </div>
-      {글제목.map((a, i) => {
+      {글제목.map(function (a, i) {
         return (
-          <div className="list">
-            <h3>
+          <div className="list" key={i}>
+            <h3
+              onClick={() => {
+                누른제목변경(i);
+              }}
+            >
               {a}
               <span
                 onClick={() => {
@@ -122,21 +128,26 @@ function App() {
           </div>
         );
       })}
-
-      {/* HTML을 한단어로 줄여서 쓸수 있는 방법: 리액트의 Component 문법 */}
+      {입력값}
+      <input
+        onChange={(e) => {
+          입력값변경(e.target.value);
+        }}
+      ></input>
+      ;{/* HTML을 한단어로 줄여서 쓸수 있는 방법: 리액트의 Component 문법 */}
       {/* Componet 유의 사항
       1. 이름은 대문자
       2. return() 안에 있는건 태그 하나로 묶어야함 -> return() 내부를 묵을때 의미없는 <div> 쓰기 싫으면 <> </> 이걸쓴다 */}
-
       {/* 어떤걸 Component로 만드는게 좋을까
       - 반복출현하는 HTML 덩어리들
       - 자주 변경되는 HTML UI들
       - 다른 페이지 만들때도 컴포넌트로 만듬 */}
-
       {/* jsx에서는 if문을 삼항연산자로 주로 쓴다.
       1<3 ? console.log('맞아요') : console.log('틀려요') 
       참일 경우 맞아요, 거짓일 경우 틀려요를 뱉는다*/}
-      {modal === true ? <Modal></Modal> : null}
+      {modal === true ? (
+        <Modal 글제목={글제목} 누른제목={누른제목}></Modal>
+      ) : null}
       <button onClick={모달창제어}>모달제어</button>
       {반복된UI()}
       {/* 일반적인 반복문 쓰는법  */}
@@ -144,14 +155,17 @@ function App() {
   );
 }
 
-function Modal() {
+function Modal(props) {
   return (
     <div className="modal">
-      <h2>제목</h2>
+      <h2>{props.글제목[props.누른제목]}</h2>
       <p>날짜</p>
       <p>상세내용</p>
     </div>
   );
+  // props로 자식에게 state  전해주는법
+  // 1. <자식컴포넌트 작명={state명}/>
+  // 2. 자식컴포넌트에서 props 파라미터 입력 후 사용
 }
 
 export default App;
