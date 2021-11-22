@@ -9,6 +9,9 @@ function App() {
     "돈큐의 코딩 아카데미",
   ]);
   let [따봉, 따봉변경] = useState(0);
+  let [누른제목, 누른제목변경] = useState(0);
+  let [입력값, 입력값변경] = useState("");
+
   // [a (남자 코트 추천), b (남자 코트 추천 state 정정해주는 함수)]
   // state 는
   // 1. 변수 대신 쓰는 데이터 저장공간
@@ -25,7 +28,7 @@ function App() {
     return 100;
   }
   function 제목바꾸기() {
-    // state 데이터 수정 테크닉
+    // state 데이터 수n정 테크닉
     // 수정된[데이터]를 만든후 state를 deep copy해서 수정
     var newArray = [...글제목];
     newArray[0] = "여자코트 추천";
@@ -38,6 +41,20 @@ function App() {
   }
   function 모달창제어() {
     modal변경(!modal);
+  }
+
+  let arr = [2, 3, 4];
+  let new_arr = arr.map(function (a) {
+    return a * 2;
+  });
+  // 맵 함수 활용법
+
+  function 반복된UI() {
+    var 어레이 = [];
+    for (var i = 0; i < 3; i++) {
+      어레이.push(<div>안녕</div>);
+    }
+    return 어레이;
   }
   return (
     <div className="App">
@@ -88,34 +105,67 @@ function App() {
         <p>2월 17일 발행</p>
         <hr></hr>
       </div>
-
-      {/* HTML을 한단어로 줄여서 쓸수 있는 방법: 리액트의 Component 문법 */}
+      {글제목.map(function (a, i) {
+        return (
+          <div className="list" key={i}>
+            <h3
+              onClick={() => {
+                누른제목변경(i);
+              }}
+            >
+              {a}
+              <span
+                onClick={() => {
+                  따봉변경(따봉 + 1);
+                }}
+              >
+                👍
+              </span>
+              {따봉}
+            </h3>
+            <p>2월 18일 발행</p>
+            <hr></hr>
+          </div>
+        );
+      })}
+      {입력값}
+      <input
+        onChange={(e) => {
+          입력값변경(e.target.value);
+        }}
+      ></input>
+      ;{/* HTML을 한단어로 줄여서 쓸수 있는 방법: 리액트의 Component 문법 */}
       {/* Componet 유의 사항
       1. 이름은 대문자
       2. return() 안에 있는건 태그 하나로 묶어야함 -> return() 내부를 묵을때 의미없는 <div> 쓰기 싫으면 <> </> 이걸쓴다 */}
-
       {/* 어떤걸 Component로 만드는게 좋을까
       - 반복출현하는 HTML 덩어리들
       - 자주 변경되는 HTML UI들
       - 다른 페이지 만들때도 컴포넌트로 만듬 */}
-
       {/* jsx에서는 if문을 삼항연산자로 주로 쓴다.
       1<3 ? console.log('맞아요') : console.log('틀려요') 
       참일 경우 맞아요, 거짓일 경우 틀려요를 뱉는다*/}
-      {modal === true ? <Modal></Modal> : null}
+      {modal === true ? (
+        <Modal 글제목={글제목} 누른제목={누른제목}></Modal>
+      ) : null}
       <button onClick={모달창제어}>모달제어</button>
+      {반복된UI()}
+      {/* 일반적인 반복문 쓰는법  */}
     </div>
   );
 }
 
-function Modal() {
+function Modal(props) {
   return (
     <div className="modal">
-      <h2>제목</h2>
+      <h2>{props.글제목[props.누른제목]}</h2>
       <p>날짜</p>
       <p>상세내용</p>
     </div>
   );
+  // props로 자식에게 state  전해주는법
+  // 1. <자식컴포넌트 작명={state명}/>
+  // 2. 자식컴포넌트에서 props 파라미터 입력 후 사용
 }
 
 export default App;
