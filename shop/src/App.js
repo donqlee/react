@@ -1,4 +1,5 @@
-import React from "react";
+import { mapToStyles } from "@popperjs/core/lib/modifiers/computeStyles";
+import React, { useState } from "react";
 import {
   Navbar,
   Container,
@@ -8,8 +9,11 @@ import {
   Button,
 } from "react-bootstrap";
 import "./App.css";
+import Data from "./data";
+import { Link, Route, Switch } from "react-router-dom";
 
 function App() {
+  let [shoes, setShoes] = useState(Data);
   return (
     <div className="App">
       <Navbar bg="light" expand="lg">
@@ -37,44 +41,61 @@ function App() {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      <Jumbotron className="background">
-        <h1>20% Season Off</h1>
-        <p>
-          This is a simple hero unit, a simple jumbotron-style component for
-          calling extra attention to featured content or information.
-        </p>
-        <p>
-          <Button variant="primary">Learn more</Button>
-        </p>
-      </Jumbotron>
-      <div className="container">
-        <div className="row">
-          <div className="col-md-4">
-            <img
-              src="https://codingapple1.github.io/shop/shoes1.jpg"
-              width="100%"
-            />
-            <h4>상품명</h4>
-            <p>상품설명 & 가격</p>
-          </div>
-          <div className="col-md-4">
-            <img
-              src="https://codingapple1.github.io/shop/shoes2.jpg"
-              width="100%"
-            />
-            <h4>상품명</h4>
-            <p>상품설명 & 가격</p>
-          </div>
-          <div className="col-md-4">
-            <img
-              src="https://codingapple1.github.io/shop/shoes3.jpg"
-              width="100%"
-            />
-            <h4>상품명</h4>
-            <p>상품설명 & 가격</p>
+
+      <Route exact path="/">
+        <Jumbotron className="background">
+          <h1>20% Season Off</h1>
+          <p>
+            This is a simple hero unit, a simple jumbotron-style component for
+            calling extra attention to featured content or information.
+          </p>
+          <p>
+            <Button variant="primary">Learn more</Button>
+          </p>
+        </Jumbotron>
+        <div className="container">
+          <div className="row">
+            {shoes.map((a, i) => {
+              return <Card shoes={a} i={i} key={i} />;
+            })}
           </div>
         </div>
-      </div>
+      </Route>
+      <Route path="/detail">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-6">
+              <img
+                src="https://codingapple1.github.io/shop/shoes1.jpg"
+                width="100%"
+              />
+            </div>
+            <div className="col-md-6 mt-4">
+              <h4 className="pt-5">상품명</h4>
+              <p>상품설명</p>
+              <p>120000원</p>
+              <button className="btn btn-danger">주문하기</button>
+            </div>
+          </div>
+        </div>
+      </Route>
+      {/* <Route path="/어쩌구" component={Modal}></Route> */}
+    </div>
+  );
+}
+function Card(props) {
+  return (
+    <div className="col-md-4">
+      <img
+        src={
+          "https://codingapple1.github.io/shop/shoes" + (props.i + 1) + ".jpg"
+        }
+        width="100%"
+      />
+      <h4>{props.shoes.title}</h4>
+      <p>
+        {props.shoes.content} & {props.shoes.price}
+      </p>
     </div>
   );
 }
