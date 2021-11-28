@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { mapToStyles } from "@popperjs/core/lib/modifiers/computeStyles";
 import React, { useState } from "react";
 import {
@@ -11,6 +12,7 @@ import {
 import "./App.css";
 import Data from "./data";
 import { Link, Route, Switch } from "react-router-dom";
+import Detail from "./Detail";
 
 function App() {
   let [shoes, setShoes] = useState(Data);
@@ -22,8 +24,12 @@ function App() {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link href="#home">Home</Nav.Link>
-              <Nav.Link href="#link">Link</Nav.Link>
+              <Nav.Link>
+                <Link to="/">Home</Link>
+              </Nav.Link>
+              <Nav.Link>
+                <Link to="/detail">Detail</Link>
+              </Nav.Link>
               <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.2">
@@ -42,44 +48,35 @@ function App() {
         </Container>
       </Navbar>
 
-      <Route exact path="/">
-        <Jumbotron className="background">
-          <h1>20% Season Off</h1>
-          <p>
-            This is a simple hero unit, a simple jumbotron-style component for
-            calling extra attention to featured content or information.
-          </p>
-          <p>
-            <Button variant="primary">Learn more</Button>
-          </p>
-        </Jumbotron>
-        <div className="container">
-          <div className="row">
-            {shoes.map((a, i) => {
-              return <Card shoes={a} i={i} key={i} />;
-            })}
-          </div>
-        </div>
-      </Route>
-      <Route path="/detail">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-6">
-              <img
-                src="https://codingapple1.github.io/shop/shoes1.jpg"
-                width="100%"
-              />
-            </div>
-            <div className="col-md-6 mt-4">
-              <h4 className="pt-5">상품명</h4>
-              <p>상품설명</p>
-              <p>120000원</p>
-              <button className="btn btn-danger">주문하기</button>
+      <Switch>
+        <Route exact path="/">
+          <Jumbotron className="background">
+            <h1>20% Season Off</h1>
+            <p>
+              This is a simple hero unit, a simple jumbotron-style component for
+              calling extra attention to featured content or information.
+            </p>
+            <p>
+              <Button variant="primary">Learn more</Button>
+            </p>
+          </Jumbotron>
+          <div className="container">
+            <div className="row">
+              {shoes.map((a, i) => {
+                return <Card shoes={a} i={i} key={i} />;
+              })}
             </div>
           </div>
-        </div>
-      </Route>
-      {/* <Route path="/어쩌구" component={Modal}></Route> */}
+        </Route>
+        <Route path="/detail/:id">
+          <Detail shoes={shoes} />
+        </Route>
+        {/* <Route path="/어쩌구" component={Modal}></Route> */}
+        <Route path="/:id">
+          {/* :id는 모든문자라는 경로를 의미 */}
+          <div>아무거나적었을때 이거 보여주셈</div>
+        </Route>
+      </Switch>
     </div>
   );
 }
