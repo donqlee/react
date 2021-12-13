@@ -13,6 +13,14 @@ import "./App.css";
 import Data from "./data";
 import { Link, Route, Switch } from "react-router-dom";
 import Detail from "./Detail";
+import styled from 'styled-components'
+
+let 박스 = styled.div`
+  padding : 20px;
+  background : black;
+  width : 20px;
+  height : 20px
+`;
 
 function App() {
   let [shoes, setShoes] = useState(Data);
@@ -77,6 +85,7 @@ function App() {
           <div>아무거나적었을때 이거 보여주셈</div>
         </Route>
       </Switch>
+      {/* Switch 컴포넌트 여러개가 맞아도 하나만 보여주세요 */}
     </div>
   );
 }

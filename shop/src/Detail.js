@@ -1,6 +1,15 @@
 /* eslint-disable */
 import React, { useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
+import styled from 'styled-components'
+
+let Box = styled.div`
+  padding : 20px;
+`;
+let Title = styled.h4`
+  font-size : 25px;
+  color : ${props => props.색상}
+`;
 
 function Detail(props) {
   let { id } = useParams();
@@ -10,6 +19,10 @@ function Detail(props) {
   let history = useHistory();
   return (
     <div className="container">
+      <Box>
+        <Title 색상={'blue'}>Detail</Title>
+        <Title 색상="red">Detail</Title>
+      </Box>
       <div className="row">
         <div className="col-md-6">
           <img src={shoe.url} width="100%" />
