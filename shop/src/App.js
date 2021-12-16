@@ -14,6 +14,7 @@ import Data from "./data";
 import { Link, Route, Switch } from "react-router-dom";
 import Detail from "./Detail";
 import styled from 'styled-components'
+import axios from 'axios';
 
 let 박스 = styled.div`
   padding : 20px;
@@ -86,7 +87,21 @@ function App() {
         </Route>
       </Switch>
       {/* Switch 컴포넌트 여러개가 맞아도 하나만 보여주세요 */}
-    </div>
+      <button className="btn btn-primary" onClick={() => {
+        //로딩중이라는 UI 띄움
+        axios.get('https://codingapple1.github.io/shop/data2.json')
+          //1. 버튼을 누르면 ajax 요청으로 데이터를 가져옴
+          //2. 그걸 shoes라는 state에 추가 [... blah] -> 껍질을 벗김 
+          .then((res) => {
+            // 로딩중이라는 UI 띄움
+            setShoes([...shoes, ...res.data]);
+
+          })
+          .catch(() => {
+            console.log("실패했어요")
+          })
+      }}>더보기</button>
+    </div >
   );
 }
 function Card(props) {

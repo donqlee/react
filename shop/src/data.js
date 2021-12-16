@@ -38,11 +38,4 @@ export default [
     url: "https://codingapple1.github.io/shop/shoes3.jpg",
   },
 
-  {
-    id: 3,
-    title: "Flower Doctor",
-    content: "Born in the Hospital",
-    price: 150000,
-    url: "https://codingapple1.github.io/shop/shoes4.jpg",
-  },
 ];
